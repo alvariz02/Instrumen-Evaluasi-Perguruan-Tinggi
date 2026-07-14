@@ -2,6 +2,8 @@ import { createServerClient } from '@/lib/supabase/server';
 import RiwayatClient from './RiwayatClient';
 import type { FormType } from '@/types/form';
 
+export const dynamic = 'force-dynamic';
+
 async function getSubmissions(formType?: FormType) {
   const supabase = createServerClient();
   let query = supabase
@@ -28,14 +30,15 @@ async function getCounts() {
   const { data, error } = await supabase.from('submissions').select('form_type');
 
   if (error) {
-    return { all: 0, timKerja: 0, humas: 0 };
+    return { all: 0, timKerja: 0, humas: 0, lappkerma: 0 };
   }
 
   const rows = data || [];
   return {
     all: rows.length,
-    timKerja: rows.filter((r) => r.form_type !== 'humas').length,
+    timKerja: rows.filter((r) => r.form_type === 'tim-kerja').length,
     humas: rows.filter((r) => r.form_type === 'humas').length,
+    lappkerma: rows.filter((r) => r.form_type === 'lappkerma').length,
   };
 }
 
@@ -45,7 +48,7 @@ export default async function RiwayatPage({
   searchParams: { type?: string };
 }) {
   const activeType =
-    searchParams.type === 'humas' || searchParams.type === 'tim-kerja'
+    searchParams.type === 'humas' || searchParams.type === 'tim-kerja' || searchParams.type === 'lappkerma'
       ? (searchParams.type as FormType)
       : undefined;
 
@@ -62,7 +65,7 @@ export default async function RiwayatPage({
             Riwayat Pengisian Instrumen
           </h1>
           <p className="text-gray-600">
-            Daftar pengisian instrumen Tim Kerja dan Hubungan Masyarakat (HUMAS).
+            Daftar pengisian instrumen Tim Kerja, Hubungan Masyarakat (HUMAS), dan Upload LAPPKERMA.
           </p>
         </div>
 

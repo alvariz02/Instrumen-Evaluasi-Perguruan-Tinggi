@@ -106,6 +106,53 @@ export default function Home() {
               </div>
             </div>
           </Link>
+
+          <Link
+            href="/form/lappkerma"
+            className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-indigo-500"
+          >
+            <div className="flex flex-col h-full">
+              <div className="flex items-center justify-center w-16 h-16 bg-indigo-100 rounded-full mb-6 group-hover:bg-indigo-200 transition-colors">
+                <svg
+                  className="w-8 h-8 text-indigo-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800 mb-3">
+                INSTRUMEN EVALUASI DAN MONITORING 
+BIDANG KERJASAMA PERGURUAN TINGGI
+
+              </h2>
+              <p className="text-gray-600 mb-6 flex-1">
+                Instrumen untuk melaporkan upload dokumen kerja sama ke laman LAPPKERMA
+              </p>
+              <div className="flex items-center text-indigo-600 font-semibold group-hover:text-indigo-800">
+                Mulai Isi
+                <svg
+                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </div>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

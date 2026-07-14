@@ -38,7 +38,7 @@ export interface FormData {
   [key: string]: string | number | null | string[] | Record<string, string>;
 }
 
-export type FormType = 'tim-kerja' | 'humas';
+export type FormType = 'tim-kerja' | 'humas' | 'lappkerma';
 
 export interface Submission {
   id: string;

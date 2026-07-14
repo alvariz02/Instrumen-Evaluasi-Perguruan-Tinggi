@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { formSchemaTimKerja, formSchemaHumas, getFormTypeLabel } from '@/lib/formSchema';
+import { formSchemaTimKerja, formSchemaHumas, formSchemaLappkerma, getFormTypeLabel } from '@/lib/formSchema';
 import type { FormSchema, FormType } from '@/types/form';
 
 interface Submission {
@@ -24,21 +24,24 @@ interface RiwayatClientProps {
     all: number;
     timKerja: number;
     humas: number;
+    lappkerma: number;
   };
 }
 
-const allSchemas: FormSchema[] = [formSchemaTimKerja, formSchemaHumas];
+const allSchemas: FormSchema[] = [formSchemaTimKerja, formSchemaHumas, formSchemaLappkerma];
 
 const filterTabs: Array<{ key: FormType | 'all'; label: string; href: string }> = [
-  // { key: 'all', label: 'Semua', href: '/riwayat' },
+  { key: 'all', label: 'Semua', href: '/riwayat' },
   { key: 'tim-kerja', label: 'Tim Kerja', href: '/riwayat?type=tim-kerja' },
   { key: 'humas', label: 'HUMAS', href: '/riwayat?type=humas' },
+  { key: 'lappkerma', label: 'LAPPKERMA', href: '/riwayat?type=lappkerma' },
 ];
 
 export default function RiwayatClient({ submissions, activeType, counts }: RiwayatClientProps) {
   const getCount = (key: FormType | 'all') => {
     if (key === 'all') return counts.all;
     if (key === 'humas') return counts.humas;
+    if (key === 'lappkerma') return counts.lappkerma;
     return counts.timKerja;
   };
 
@@ -47,7 +50,9 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
       ? 'Belum ada data pengisian instrumen HUMAS.'
       : activeType === 'tim-kerja'
         ? 'Belum ada data pengisian instrumen Tim Kerja.'
-        : 'Belum ada data pengisian.';
+        : activeType === 'lappkerma'
+          ? 'Belum ada data pengisian instrumen Upload LAPPKERMA.'
+          : 'Belum ada data pengisian.';
 
   const getFieldLabel = (fieldKey: string): string => {
     if (fieldKey.endsWith('_condition')) {

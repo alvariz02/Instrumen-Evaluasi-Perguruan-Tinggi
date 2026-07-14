@@ -204,6 +204,22 @@ export const formSchemaTimKerja: FormSchema = {
           { key: 'kekurangan_dokumen', label: 'Uraikan kekurangan yang ada', type: 'textarea' },
           { key: 'rencana_pemenuhan_dokumen', label: 'Jelaskan rencana pemenuhan dokumen', type: 'textarea' }
         ]
+      },
+      {
+        id: 'E2',
+        title: 'Upload Dokumen ke LAPPKERMA',
+        description: 'Apakah seluruh dokumen kerja sama (MoU, MoA/PKS) diupload ke laman LAPPKERMA?',
+        type: 'conditional',
+        condition_label: 'Status Upload',
+        condition_options: ['Ya', 'Tidak'],
+        fields_if_true: [
+          { key: 'link_upload_lappkerma', label: 'Sertakan link upload ke laman LAPPKERMA', type: 'file_or_link' },
+          { key: 'uraian_upload_lappkerma', label: 'Jelaskan proses upload dan status dokumen', type: 'textarea' }
+        ],
+        fields_if_false: [
+          { key: 'alasan_tidak_upload_lappkerma', label: 'Jelaskan alasan tidak diupload', type: 'textarea' },
+          { key: 'saran_perubahan_upload', label: 'Sampaikan saran perbaikan di masa depan', type: 'textarea' }
+        ]
       }
     ]
   },
@@ -416,16 +432,216 @@ export const formSchemaHumas: FormSchema = {
   }
 };
 
+export const formSchemaLappkerma: FormSchema = {
+  L: {
+    title: 'Form Evaluasi Kerja Sama dan Upload LAPPKERMA',
+    items: [
+      {
+        id: 'L1',
+        title: 'Dokumen Perencanaan Strategis Kerja Sama',
+        description: 'Apakah ada dokumen perencanaan strategis/Rencana Kerja Tahunan kerja sama (Renstra/RKT bidang kerjasama)?',
+        type: 'conditional',
+        condition_label: 'Status Ketersediaan',
+        condition_options: ['Ya', 'Tidak'],
+        fields_if_true: [
+          { key: 'tahapan_perumusan', label: 'Jelaskan tahapan perumusan dokumen perencanaan kerja sama', type: 'textarea' },
+          { key: 'bukti_dokumen_renstra', label: 'Lampirkan bukti dokumen perencanaan kerja sama', type: 'file' }
+        ],
+        fields_if_false: [
+          { key: 'rencana_penyusunan_renstra', label: 'Apakah dokumen perencanaan kerja sama akan dilakukan? Jelaskan.', type: 'textarea' }
+        ]
+      },
+      {
+        id: 'L2',
+        title: 'Keselarasan dengan Visi dan Misi',
+        description: 'Apakah dokumen kerja sama selaras dengan visi dan misi perguruan tinggi?',
+        type: 'conditional',
+        condition_label: 'Status Keselarasan',
+        condition_options: ['Ya', 'Tidak'],
+        fields_if_true: [
+          { key: 'uraian_keselarasan', label: 'Jelaskan bentuk keselarasan', type: 'textarea' },
+          { key: 'contoh_keselarasan', label: 'Sebutkan contoh keselarasan', type: 'textarea' }
+        ],
+        fields_if_false: [
+          { key: 'alasan_tidak_selaras', label: 'Sebutkan alasan dan saran perubahan di masa depan', type: 'textarea' },
+          { key: 'bukti_keselarasan', label: 'Lampirkan bukti pendukung', type: 'file' }
+        ]
+      },
+      {
+        id: 'L3',
+        title: 'Keterlibatan Penyelenggara/Yayasan',
+        description: 'Apakah penyelenggara/yayasan terlibat dalam perencanaan kerja sama perguruan tinggi?',
+        type: 'conditional',
+        condition_label: 'Status Keterlibatan',
+        condition_options: ['Ya', 'Tidak'],
+        fields_if_true: [
+          { key: 'uraian_keterlibatan', label: 'Jelaskan bagaimana keterlibatan penyelenggara/yayasan', type: 'textarea' },
+          { key: 'bukti_keterlibatan', label: 'Lampirkan bukti keterlibatan (FGD, workshop, dll)', type: 'file' }
+        ],
+        fields_if_false: [
+          { key: 'alasan_tidak_terlibat', label: 'Sebutkan alasan dan saran perubahan di masa depan', type: 'textarea' }
+        ]
+      },
+      {
+        id: 'L4',
+        title: 'Status Dokumen Kerja Sama',
+        description: 'Jumlah dokumen MoU dan PKS aktif dan tidak aktif.',
+        type: 'simple',
+        fields: [
+          { key: 'jumlah_mou_pks_aktif', label: 'Jumlah dokumen aktif (di dalam dan di luar negeri)', type: 'number' },
+          { key: 'jumlah_mou_pks_tidak_aktif', label: 'Jumlah dokumen tidak aktif/kedaluwarsa', type: 'number' },
+          { key: 'bukti_status_dokumen', label: 'Lampirkan bukti laporan kegiatan atau link kerjasama', type: 'file_or_link' }
+        ]
+      },
+      {
+        id: 'L5',
+        title: 'Realisasi Program dari MoU/PKS',
+        description: 'Apakah program dari MoU/PKS terealisasi?',
+        type: 'conditional',
+        condition_label: 'Status Realisasi',
+        condition_options: ['Terealisasi', 'Belum terealisasi'],
+        fields_if_true: [
+          { key: 'uraian_program_teralisasi', label: 'Jelaskan kerja sama yang telah terealisasi', type: 'textarea' }
+        ],
+        fields_if_false: [
+          { key: 'kendala_realisasi', label: 'Jelaskan kendala yang menyebabkan belum terealisasi', type: 'textarea' }
+        ]
+      },
+      {
+        id: 'L6',
+        title: 'Kejelasan Peran dan Tanggung Jawab',
+        description: 'Apakah pembagian peran dan tanggung jawab dalam implementasi kerja sama jelas?',
+        type: 'conditional',
+        condition_label: 'Status Kejelasan',
+        condition_options: ['Jelas', 'Belum jelas'],
+        fields_if_true: [
+          { key: 'uraian_pembagian_peran', label: 'Jelaskan kejelasan pembagian peran dan tanggung jawab', type: 'textarea' }
+        ],
+        fields_if_false: [
+          { key: 'kendala_pembagian_peran', label: 'Jelaskan kendala dan saran perbaikan di masa depan', type: 'textarea' }
+        ]
+      },
+      {
+        id: 'L7',
+        title: 'Dampak terhadap Tridharma',
+        description: 'Apakah kerja sama memberikan dampak terhadap peningkatan kualitas tridharma perguruan tinggi?',
+        type: 'conditional',
+        condition_label: 'Status Dampak',
+        condition_options: ['Ada', 'Tidak'],
+        fields_if_true: [
+          { key: 'uraian_dampak_tridharma', label: 'Jelaskan dampak terhadap pendidikan, penelitian, dan pengabdian', type: 'textarea' }
+        ],
+        fields_if_false: [
+          { key: 'kendala_dampak_tridharma', label: 'Sebutkan kendala dan saran perubahan di masa depan', type: 'textarea' },
+          { key: 'bukti_dampak_tridharma', label: 'Lampirkan bukti kegiatan atau laporan', type: 'file' }
+        ]
+      },
+      {
+        id: 'L8',
+        title: 'Peningkatan Reputasi dan Jejaring',
+        description: 'Apakah terjadi peningkatan reputasi dan jejaring institusi melalui kerja sama?',
+        type: 'conditional',
+        condition_label: 'Status Reputasi',
+        condition_options: ['Ya', 'Tidak'],
+        fields_if_true: [
+          { key: 'uraian_reputasi_jejaring', label: 'Jelaskan peningkatan reputasi dan jejaring', type: 'textarea' }
+        ],
+        fields_if_false: [
+          { key: 'kendala_reputasi_jejaring', label: 'Sebutkan kendala dan saran perubahan di masa depan', type: 'textarea' },
+          { key: 'bukti_reputasi_jejaring', label: 'Lampirkan bukti publikasi, media, atau ranking', type: 'file' }
+        ]
+      },
+      {
+        id: 'L9',
+        title: 'Manfaat Nyata bagi Mahasiswa/Dosen/PT',
+        description: 'Apakah ada manfaat nyata yang dirasakan oleh mahasiswa, dosen, atau institusi?',
+        type: 'conditional',
+        condition_label: 'Status Manfaat',
+        condition_options: ['Ada', 'Tidak'],
+        fields_if_true: [
+          { key: 'uraian_manfaat', label: 'Jelaskan manfaat nyata yang dirasakan', type: 'textarea' }
+        ],
+        fields_if_false: [
+          { key: 'kendala_manfaat', label: 'Sebutkan kendala dan saran perubahan di masa depan', type: 'textarea' },
+          { key: 'bukti_manfaat', label: 'Lampirkan bukti kuesioner, wawancara, atau testimoni', type: 'file' }
+        ]
+      },
+      {
+        id: 'L10',
+        title: 'Mekanisme Monitoring dan Evaluasi',
+        description: 'Apakah ada mekanisme monitoring dan evaluasi secara berkala terhadap kerja sama?',
+        type: 'conditional',
+        condition_label: 'Status Monev',
+        condition_options: ['Ada', 'Tidak'],
+        fields_if_true: [
+          { key: 'uraian_monev', label: 'Jelaskan mekanisme, frekuensi, dan instrumen monitoring/evaluasi', type: 'textarea' }
+        ],
+        fields_if_false: [
+          { key: 'alasan_tidak_monev', label: 'Sebutkan alasan dan saran perubahan di masa depan', type: 'textarea' },
+          { key: 'bukti_monev', label: 'Lampirkan bukti laporan monev atau rapat evaluasi', type: 'file' }
+        ]
+      },
+      {
+        id: 'L11',
+        title: 'Tindak Lanjut Hasil Evaluasi',
+        description: 'Apakah ada tindak lanjut dari hasil evaluasi dan perbaikan program kerja sama?',
+        type: 'conditional',
+        condition_label: 'Status Tindak Lanjut',
+        condition_options: ['Ada', 'Tidak'],
+        fields_if_true: [
+          { key: 'uraian_tindak_lanjut', label: 'Jelaskan tindak lanjut dan perbaikan', type: 'textarea' }
+        ],
+        fields_if_false: [
+          { key: 'alasan_tidak_tindak_lanjut', label: 'Sebutkan alasan/kendala dan saran perubahan di masa depan', type: 'textarea' },
+          { key: 'bukti_tindak_lanjut', label: 'Lampirkan bukti pelaksanaan rekomendasi', type: 'file' }
+        ]
+      },
+      {
+        id: 'L12',
+        title: 'Kelengkapan Dokumen Administratif',
+        description: 'Apakah ada kelengkapan dokumen legal dan administratif kerja sama?',
+        type: 'conditional',
+        condition_label: 'Status Kelengkapan',
+        condition_options: ['Lengkap', 'Belum lengkap'],
+        fields_if_true: [
+          { key: 'rincian_dokumen_kerjasama', label: 'Sebutkan/rincikan dokumen yang lengkap', type: 'textarea' }
+        ],
+        fields_if_false: [
+          { key: 'alasan_tidak_lengkap_dokumen', label: 'Sebutkan alasannya dan saran perbaikan di masa depan', type: 'textarea' }
+        ]
+      },
+      {
+        id: 'L13',
+        title: 'Upload Dokumen ke LAPPKERMA',
+        description: 'Apakah seluruh dokumen kerja sama (MoU, MoA/PKS) diupload ke laman LAPPKERMA?',
+        type: 'conditional',
+        condition_label: 'Status Upload LAPPKERMA',
+        condition_options: ['Ya', 'Tidak'],
+        fields_if_true: [
+          { key: 'link_upload_lappkerma', label: 'Link upload ke laman LAPPKERMA', type: 'file_or_link' },
+          { key: 'uraian_upload_lappkerma', label: 'Jelaskan proses upload dan status dokumen', type: 'textarea' }
+        ],
+        fields_if_false: [
+          { key: 'alasan_tidak_upload_lappkerma', label: 'Sebutkan alasannya dan saran perubahan di masa depan', type: 'textarea' }
+        ]
+      }
+    ]
+  }
+};
+
 export const sectionKeys = Object.keys(formSchema);
 export const sectionKeysTimKerja = Object.keys(formSchemaTimKerja);
 export const sectionKeysHumas = Object.keys(formSchemaHumas);
+export const sectionKeysLappkerma = Object.keys(formSchemaLappkerma);
 
 export function getFormSchema(formType?: string): FormSchema {
   if (formType === 'humas') return formSchemaHumas;
+  if (formType === 'lappkerma') return formSchemaLappkerma;
   return formSchemaTimKerja;
 }
 
 export function getFormTypeLabel(formType?: string): string {
   if (formType === 'humas') return 'Hubungan Masyarakat (HUMAS)';
+  if (formType === 'lappkerma') return 'Upload LAPPKERMA';
   return 'Tim Kerja Kerjasama';
 }

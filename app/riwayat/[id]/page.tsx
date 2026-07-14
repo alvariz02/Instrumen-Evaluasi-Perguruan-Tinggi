@@ -2,6 +2,8 @@ import { createServerClient } from '@/lib/supabase/server';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getFormSchema, getFormTypeLabel } from '@/lib/formSchema';
+
+export const dynamic = 'force-dynamic';
 import type { FormItem } from '@/types/form';
 
 function parseJsonField<T>(value: unknown, fallback: T): T {

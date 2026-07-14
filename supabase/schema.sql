@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS submissions (
   position TEXT,
   submission_date DATE,
   status TEXT DEFAULT 'draft' CHECK (status IN ('draft', 'submitted')),
-  form_type TEXT DEFAULT 'tim-kerja' CHECK (form_type IN ('tim-kerja', 'humas')),
+  form_type TEXT DEFAULT 'tim-kerja' CHECK (form_type IN ('tim-kerja', 'humas', 'lappkerma')),
   form_data JSONB NOT NULL DEFAULT '{}'::jsonb
 );
 
