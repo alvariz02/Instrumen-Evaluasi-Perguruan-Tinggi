@@ -36,7 +36,7 @@ export default function Home() {
                 </svg>
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-3">
-                Instrumen Tim Kerja
+                Instrumen Tim Kerja Kerja Sama Perguruan Tinggi
               </h2>
               <p className="text-gray-600 mb-6 flex-1">
                 Instrumen untuk evaluasi dan monitoring bidang kerja sama perguruan tinggi melalui tim kerja
