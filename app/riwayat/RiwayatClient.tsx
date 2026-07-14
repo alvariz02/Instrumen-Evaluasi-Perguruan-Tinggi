@@ -208,8 +208,8 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
   return (
     <>
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="p-6 border-b border-gray-200">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="p-4 md:p-6 border-b border-gray-200">
+          <div className="flex flex-col gap-3 md:gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex flex-wrap gap-2">
               {filterTabs.map((tab) => {
                 const isActive =
@@ -219,7 +219,7 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
                   <Link
                     key={tab.key}
                     href={tab.href}
-                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                    className={`inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-semibold transition-colors ${
                       isActive
                         ? tab.key === 'humas'
                           ? 'bg-green-600 text-white'
@@ -231,7 +231,7 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
                   >
                     {tab.label}
                     <span
-                      className={`px-2 py-0.5 rounded-full text-xs ${
+                      className={`px-1.5 md:px-2 py-0.5 rounded-full text-xs ${
                         isActive ? 'bg-white/20' : 'bg-white text-gray-600'
                       }`}
                     >
@@ -242,13 +242,13 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
               })}
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 md:gap-3">
               <Link
                 href="/"
-                className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium text-sm"
+                className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium text-xs md:text-sm px-2 py-1.5 md:px-4 md:py-2"
               >
                 <svg
-                  className="w-5 h-5 mr-2"
+                  className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -260,15 +260,16 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
                     d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                   />
                 </svg>
-                Isi Instrumen Baru
+                <span className="hidden sm:inline">Isi Instrumen Baru</span>
+                <span className="sm:hidden">Isi</span>
               </Link>
               {submissions.length > 0 && (
                 <button
                   onClick={exportToCSV}
-                  className="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors text-sm"
+                  className="inline-flex items-center bg-green-600 text-white px-2 py-1.5 md:px-4 md:py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors text-xs md:text-sm"
                 >
                   <svg
-                    className="w-5 h-5 mr-2"
+                    className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -280,7 +281,8 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
                       d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                     />
                   </svg>
-                  Export CSV
+                  <span className="hidden sm:inline">Export CSV</span>
+                  <span className="sm:hidden">Export</span>
                 </button>
               )}
             </div>
@@ -288,13 +290,13 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
         </div>
 
         {submissions.length === 0 ? (
-          <div className="p-12 text-center">
-            <p className="text-gray-500 text-lg">{emptyMessage}</p>
-            <div className="mt-4 flex flex-wrap justify-center gap-3">
+          <div className="p-6 md:p-12 text-center">
+            <p className="text-gray-500 text-base md:text-lg">{emptyMessage}</p>
+            <div className="mt-4 flex flex-wrap justify-center gap-2 md:gap-3">
               {activeType === 'humas' && (
                 <Link
                   href="/form/humas"
-                  className="inline-block bg-green-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+                  className="inline-block bg-green-600 text-white py-2 px-4 md:px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors text-sm md:text-base"
                 >
                   Isi Instrumen HUMAS
                 </Link>
@@ -302,7 +304,7 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
               {activeType === 'tim-kerja' && (
                 <Link
                   href="/form/tim-kerja"
-                  className="inline-block bg-blue-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  className="inline-block bg-blue-600 text-white py-2 px-4 md:px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-sm md:text-base"
                 >
                   Isi Instrumen Tim Kerja
                 </Link>
@@ -310,7 +312,7 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
               {!activeType && (
                 <Link
                   href="/"
-                  className="inline-block bg-blue-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  className="inline-block bg-blue-600 text-white py-2 px-4 md:px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-sm md:text-base"
                 >
                   Mulai Mengisi
                 </Link>
@@ -318,25 +320,88 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
             </div>
           </div>
         ) : (
-          <table className="w-full">
+          <>
+            {/* Mobile Card View */}
+            <div className="md:hidden">
+              <div className="divide-y divide-gray-200">
+                {submissions.map((submission) => (
+                  <div key={submission.id} className="p-4 hover:bg-gray-50">
+                    <div className="space-y-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <span
+                          className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            submission.form_type === 'humas'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-blue-100 text-blue-800'
+                          }`}
+                        >
+                          {getFormTypeLabel(submission.form_type)}
+                        </span>
+                        <span
+                          className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            submission.status === 'submitted'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-yellow-100 text-yellow-800'
+                          }`}
+                        >
+                          {submission.status === 'submitted' ? 'Terkirim' : 'Draft'}
+                        </span>
+                      </div>
+
+                      <div>
+                        <div className="text-sm font-semibold text-gray-900">
+                          {submission.institution_name}
+                        </div>
+                        <div className="text-xs text-gray-600 mt-0.5">
+                          {submission.submitted_by}
+                        </div>
+                        {submission.position && (
+                          <div className="text-xs text-gray-500 mt-0.5">
+                            {submission.position}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="text-xs text-gray-500 border-t pt-2">
+                        {new Date(submission.created_at).toLocaleDateString('id-ID', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric',
+                        })}
+                      </div>
+
+                      <Link
+                        href={`/riwayat/${submission.id}`}
+                        className="inline-flex w-full justify-center text-blue-600 hover:text-blue-900 font-semibold text-xs px-3 py-2 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors"
+                      >
+                        Lihat Detail
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop Table View */}
+            <table className="w-full hidden md:table">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Jenis Instrumen
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Nama Perguruan Tinggi
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Pengisi
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Tanggal
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Aksi
                 </th>
               </tr>
@@ -344,7 +409,7 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
             <tbody className="bg-white divide-y divide-gray-200">
               {submissions.map((submission) => (
                 <tr key={submission.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-4 lg:px-6 py-3 text-sm">
                     <span
                       className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
                         submission.form_type === 'humas'
@@ -355,24 +420,24 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
                       {getFormTypeLabel(submission.form_type)}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-4 lg:px-6 py-3">
                     <div className="text-sm font-medium text-gray-900">
                       {submission.institution_name}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-4 lg:px-6 py-3">
                     <div className="text-sm text-gray-900">
                       {submission.submitted_by}
                     </div>
                     {submission.position && (
-                      <div className="text-sm text-gray-500">
+                      <div className="text-xs text-gray-500">
                         {submission.position}
                       </div>
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-4 lg:px-6 py-3">
                     <span
-                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
                         submission.status === 'submitted'
                           ? 'bg-green-100 text-green-800'
                           : 'bg-yellow-100 text-yellow-800'
@@ -381,14 +446,14 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
                       {submission.status === 'submitted' ? 'Terkirim' : 'Draft'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-4 lg:px-6 py-3 text-sm text-gray-500">
                     {new Date(submission.created_at).toLocaleDateString('id-ID', {
                       day: 'numeric',
                       month: 'long',
                       year: 'numeric',
                     })}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td className="px-4 lg:px-6 py-3 text-right text-sm font-medium">
                     <Link
                       href={`/riwayat/${submission.id}`}
                       className="text-blue-600 hover:text-blue-900"
@@ -399,7 +464,8 @@ export default function RiwayatClient({ submissions, activeType, counts }: Riway
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </>
         )}
       </div>
     </>

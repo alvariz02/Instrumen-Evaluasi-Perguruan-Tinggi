@@ -56,10 +56,10 @@ function renderItemContent(
 ) {
   if (item.type === 'simple' && item.fields) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {item.fields.map((field) => (
           <div key={field.key}>
-            <span className="text-sm font-medium text-gray-700 block mb-1">
+            <span className="text-xs sm:text-sm font-medium text-gray-700 block mb-1">
               {field.label}
             </span>
             {field.type === 'file' || field.type === 'file_or_link' ? (
@@ -71,18 +71,18 @@ function renderItemContent(
                     href={fileUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 text-sm"
+                    className="text-blue-600 hover:text-blue-800 text-xs sm:text-sm break-all"
                   >
                     {attachment?.file_name || field.key}
                   </a>
                 ) : (
-                  <span className="text-gray-500 text-sm">
+                  <span className="text-gray-500 text-xs sm:text-sm">
                     {(formData[field.key] as string) || '-'}
                   </span>
                 );
               })()
             ) : (
-              <p className="text-gray-900 text-sm">
+              <p className="text-gray-900 text-xs sm:text-sm break-words">
                 {(formData[field.key] as string) || '-'}
               </p>
             )}
@@ -98,19 +98,19 @@ function renderItemContent(
     const relevantFields = isFirstOption ? item.fields_if_true : item.fields_if_false;
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         <div>
-          <span className="text-sm font-medium text-gray-700 block mb-1">
+          <span className="text-xs sm:text-sm font-medium text-gray-700 block mb-1">
             {item.condition_label}
           </span>
-          <p className="text-gray-900 text-sm">{(conditionValue as string) || '-'}</p>
+          <p className="text-gray-900 text-xs sm:text-sm">{(conditionValue as string) || '-'}</p>
         </div>
 
         {relevantFields && relevantFields.length > 0 && (
-          <div className="space-y-4 pt-4 border-t border-gray-200">
+          <div className="space-y-3 sm:space-y-4 pt-3 sm:pt-4 border-t border-gray-200">
             {relevantFields.map((field) => (
               <div key={field.key}>
-                <span className="text-sm font-medium text-gray-700 block mb-1">
+                <span className="text-xs sm:text-sm font-medium text-gray-700 block mb-1">
                   {field.label}
                 </span>
                 {field.type === 'file' ? (
@@ -122,16 +122,16 @@ function renderItemContent(
                         href={fileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 text-sm"
+                        className="text-blue-600 hover:text-blue-800 text-xs sm:text-sm break-all"
                       >
                         {attachment?.file_name || field.key}
                       </a>
                     ) : (
-                      <span className="text-gray-500 text-sm">Tidak ada file</span>
+                      <span className="text-gray-500 text-xs sm:text-sm">Tidak ada file</span>
                     );
                   })()
                 ) : (
-                  <p className="text-gray-900 text-sm whitespace-pre-wrap">
+                  <p className="text-gray-900 text-xs sm:text-sm whitespace-pre-wrap break-words">
                     {(formData[field.key] as string) || '-'}
                   </p>
                 )}
@@ -151,17 +151,17 @@ function renderItemContent(
 
     return (
       <div>
-        <span className="text-sm font-medium text-gray-700 block mb-1">
+        <span className="text-xs sm:text-sm font-medium text-gray-700 block mb-1">
           {item.label}
         </span>
         {displayValues.length > 0 ? (
-          <ul className="list-disc list-inside text-sm text-gray-900 space-y-1">
+          <ul className="list-disc list-inside text-xs sm:text-sm text-gray-900 space-y-1">
             {displayValues.map((value) => (
-              <li key={value}>{value}</li>
+              <li key={value} className="break-words">{value}</li>
             ))}
           </ul>
         ) : (
-          <p className="text-gray-500 text-sm">-</p>
+          <p className="text-gray-500 text-xs sm:text-sm">-</p>
         )}
       </div>
     );
@@ -171,12 +171,12 @@ function renderItemContent(
     const tableData = parseJsonField<Record<string, string>>(formData[item.id], {});
 
     return (
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse border border-gray-300 text-sm">
+      <div className="overflow-x-auto -mx-4 sm:mx-0">
+        <table className="w-full border-collapse border border-gray-300 text-xs sm:text-sm mx-4 sm:mx-0">
           <thead>
             <tr className="bg-gray-100">
               {(item.columns || []).map((column) => (
-                <th key={column} className="border border-gray-300 px-4 py-2 text-left">
+                <th key={column} className="border border-gray-300 px-2 sm:px-4 py-2 text-left">
                   {column}
                 </th>
               ))}
@@ -185,8 +185,8 @@ function renderItemContent(
           <tbody>
             {(item.rows || []).map((row) => (
               <tr key={row.id}>
-                <td className="border border-gray-300 px-4 py-2">{row.values[0]}</td>
-                <td className="border border-gray-300 px-4 py-2">
+                <td className="border border-gray-300 px-2 sm:px-4 py-2">{row.values[0]}</td>
+                <td className="border border-gray-300 px-2 sm:px-4 py-2">
                   {tableData[`${row.id}_1`] || '-'}
                 </td>
               </tr>
@@ -200,10 +200,10 @@ function renderItemContent(
   if (item.type === 'radio') {
     return (
       <div>
-        <span className="text-sm font-medium text-gray-700 block mb-1">
+        <span className="text-xs sm:text-sm font-medium text-gray-700 block mb-1">
           {item.label}
         </span>
-        <p className="text-gray-900 text-sm">{(formData[item.id] as string) || '-'}</p>
+        <p className="text-gray-900 text-xs sm:text-sm">{(formData[item.id] as string) || '-'}</p>
       </div>
     );
   }
@@ -238,14 +238,14 @@ export default async function SubmissionDetailPage({
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="max-w-5xl mx-auto px-4 py-8">
-        <div className="mb-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
+        <div className="mb-6 sm:mb-8">
           <Link
             href="/riwayat"
-            className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mb-4"
+            className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mb-3 sm:mb-4 text-sm sm:text-base"
           >
             <svg
-              className="w-5 h-5 mr-2"
+              className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -259,34 +259,34 @@ export default async function SubmissionDetailPage({
             </svg>
             Kembali ke Riwayat
           </Link>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
             Detail Pengisian Instrumen
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-sm sm:text-base">
             {getFormTypeLabel(submission.form_type)}
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-4 sm:mb-6">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
             Informasi Pengisi
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <span className="text-sm font-medium text-gray-500">Nama PT:</span>
-              <p className="text-gray-900">{submission.institution_name}</p>
+              <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">Nama PT:</span>
+              <p className="text-sm sm:text-base text-gray-900 break-words">{submission.institution_name}</p>
             </div>
             <div>
-              <span className="text-sm font-medium text-gray-500">Pengisi:</span>
-              <p className="text-gray-900">{submission.submitted_by}</p>
+              <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">Pengisi:</span>
+              <p className="text-sm sm:text-base text-gray-900 break-words">{submission.submitted_by}</p>
             </div>
             <div>
-              <span className="text-sm font-medium text-gray-500">Jabatan:</span>
-              <p className="text-gray-900">{submission.position || '-'}</p>
+              <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">Jabatan:</span>
+              <p className="text-sm sm:text-base text-gray-900 break-words">{submission.position || '-'}</p>
             </div>
             <div>
-              <span className="text-sm font-medium text-gray-500">Tanggal:</span>
-              <p className="text-gray-900">
+              <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">Tanggal:</span>
+              <p className="text-sm sm:text-base text-gray-900">
                 {submission.submission_date
                   ? new Date(submission.submission_date).toLocaleDateString('id-ID', {
                       day: 'numeric',
@@ -297,9 +297,9 @@ export default async function SubmissionDetailPage({
               </p>
             </div>
             <div>
-              <span className="text-sm font-medium text-gray-500">Status:</span>
+              <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">Status:</span>
               <span
-                className={`ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
                   submission.status === 'submitted'
                     ? 'bg-green-100 text-green-800'
                     : 'bg-yellow-100 text-yellow-800'
@@ -309,8 +309,8 @@ export default async function SubmissionDetailPage({
               </span>
             </div>
             <div>
-              <span className="text-sm font-medium text-gray-500">Dibuat:</span>
-              <p className="text-gray-900">
+              <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">Dibuat:</span>
+              <p className="text-sm sm:text-base text-gray-900">
                 {new Date(submission.created_at).toLocaleDateString('id-ID', {
                   day: 'numeric',
                   month: 'long',
@@ -324,20 +324,20 @@ export default async function SubmissionDetailPage({
         </div>
 
         {Object.entries(formSchema).map(([sectionKey, section]) => (
-          <div key={sectionKey} className="bg-white rounded-lg shadow-md mb-4 overflow-hidden">
-            <div className="px-6 py-4 bg-gradient-to-r from-blue-50 to-white">
-              <div className="flex items-center gap-3">
-                <span className="bg-blue-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">
+          <div key={sectionKey} className="bg-white rounded-lg shadow-md mb-3 sm:mb-4 overflow-hidden">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-blue-50 to-white">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <span className="bg-blue-600 text-white font-bold rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs sm:text-sm">
                   {sectionKey}
                 </span>
-                <h2 className="text-lg font-semibold text-gray-800">{section.title}</h2>
+                <h2 className="text-base sm:text-lg font-semibold text-gray-800">{section.title}</h2>
               </div>
             </div>
-            <div className="p-6 space-y-6">
+            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               {section.items.map((item) => (
-                <div key={item.id} className="bg-gray-50 rounded-lg p-4">
-                  <h3 className="font-semibold text-gray-800 mb-1">{item.title}</h3>
-                  <p className="text-sm text-gray-600 mb-4">{item.description}</p>
+                <div key={item.id} className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                  <h3 className="font-semibold text-gray-800 mb-1 text-sm sm:text-base">{item.title}</h3>
+                  <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">{item.description}</p>
                   {renderItemContent(item, submission.form_data, getFileUrl, attachmentMap)}
                 </div>
               ))}
