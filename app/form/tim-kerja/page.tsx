@@ -245,16 +245,6 @@ export default function TimKerjaForm() {
             </button>
           </div>
         </form>
-
-        <div className="mt-6 text-center">
-          <button
-            type="button"
-            onClick={() => router.push('/riwayat?type=tim-kerja')}
-            className="text-blue-600 hover:text-blue-800 font-medium"
-          >
-            Lihat Riwayat Tim Kerja
-          </button>
-        </div>
       </div>
     </div>
   );

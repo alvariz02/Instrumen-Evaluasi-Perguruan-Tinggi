@@ -242,16 +242,6 @@ export default function HumasForm() {
             </button>
           </div>
         </form>
-
-        <div className="mt-6 text-center">
-          <button
-            type="button"
-            onClick={() => router.push('/riwayat?type=humas')}
-            className="text-green-600 hover:text-green-800 font-medium"
-          >
-            Lihat Riwayat HUMAS
-          </button>
-        </div>
       </div>
     </div>
   );
