@@ -50,11 +50,71 @@ async function getAttachments(submissionId: string) {
   return data || [];
 }
 
+function renderFileValue(
+  fieldKey: string,
+  formValue: unknown,
+  getFileUrl: (fieldKey: string) => string | null,
+  attachmentMap: Map<string, { file_name: string; file_path?: string }>
+) {
+  const fileUrl = getFileUrl(fieldKey);
+  const attachment = attachmentMap.get(fieldKey);
+  const normalizedValue = typeof formValue === 'string' ? formValue.trim() : '';
+
+  if (fileUrl) {
+    return (
+      <div className="rounded-lg border border-blue-200 bg-blue-50 p-3 sm:p-4">
+        <div className="flex items-start gap-2">
+          <svg
+            className="mt-0.5 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0 text-blue-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
+          </svg>
+          <div className="min-w-0">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-700">
+              Lampiran
+            </p>
+            <a
+              href={fileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 inline-flex text-sm font-medium text-blue-700 hover:text-blue-900 break-all"
+            >
+              {attachment?.file_name || 'Buka file terlampir'}
+            </a>
+            <p className="mt-1 text-xs text-gray-500">
+              File berhasil diunggah dan dapat dibuka langsung.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (normalizedValue) {
+    return (
+      <div className="rounded-lg border border-gray-200 bg-white px-3 py-2 sm:px-4">
+        <p className="text-xs font-medium text-gray-500 mb-1">Informasi tambahan</p>
+        <p className="text-sm text-gray-900 break-words">{normalizedValue}</p>
+      </div>
+    );
+  }
+
+  return <span className="text-gray-500 text-xs sm:text-sm">Belum ada file atau tautan</span>;
+}
+
 function renderItemContent(
   item: FormItem,
   formData: Record<string, unknown>,
   getFileUrl: (fieldKey: string) => string | null,
-  attachmentMap: Map<string, { file_name: string }>
+  attachmentMap: Map<string, { file_name: string; file_path?: string }>
 ) {
   if (item.type === 'simple' && item.fields) {
     return (
@@ -65,24 +125,7 @@ function renderItemContent(
               {field.label}
             </span>
             {field.type === 'file' || field.type === 'file_or_link' ? (
-              (() => {
-                const fileUrl = getFileUrl(field.key);
-                const attachment = attachmentMap.get(field.key);
-                return fileUrl ? (
-                  <a
-                    href={fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 text-xs sm:text-sm break-all"
-                  >
-                    {attachment?.file_name || field.key}
-                  </a>
-                ) : (
-                  <span className="text-gray-500 text-xs sm:text-sm">
-                    {(formData[field.key] as string) || '-'}
-                  </span>
-                );
-              })()
+              renderFileValue(field.key, formData[field.key], getFileUrl, attachmentMap)
             ) : (
               <p className="text-gray-900 text-xs sm:text-sm break-words">
                 {(formData[field.key] as string) || '-'}
@@ -115,23 +158,8 @@ function renderItemContent(
                 <span className="text-xs sm:text-sm font-medium text-gray-700 block mb-1">
                   {field.label}
                 </span>
-                {field.type === 'file' ? (
-                  (() => {
-                    const fileUrl = getFileUrl(field.key);
-                    const attachment = attachmentMap.get(field.key);
-                    return fileUrl ? (
-                      <a
-                        href={fileUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 text-xs sm:text-sm break-all"
-                      >
-                        {attachment?.file_name || field.key}
-                      </a>
-                    ) : (
-                      <span className="text-gray-500 text-xs sm:text-sm">Tidak ada file</span>
-                    );
-                  })()
+                {field.type === 'file' || field.type === 'file_or_link' ? (
+                  renderFileValue(field.key, formData[field.key], getFileUrl, attachmentMap)
                 ) : (
                   <p className="text-gray-900 text-xs sm:text-sm whitespace-pre-wrap break-words">
                     {(formData[field.key] as string) || '-'}
@@ -269,75 +297,73 @@ export default async function SubmissionDetailPage({
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-4 sm:mb-6">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
             Informasi Pengisi
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            <div>
-              <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">Nama PT:</span>
-              <p className="text-sm sm:text-base text-gray-900 break-words">{submission.institution_name}</p>
-            </div>
-            <div>
-              <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">Pengisi:</span>
-              <p className="text-sm sm:text-base text-gray-900 break-words">{submission.submitted_by}</p>
-            </div>
-            <div>
-              <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">Jabatan:</span>
-              <p className="text-sm sm:text-base text-gray-900 break-words">{submission.position || '-'}</p>
-            </div>
-            <div>
-              <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">Tanggal:</span>
-              <p className="text-sm sm:text-base text-gray-900">
-                {submission.submission_date
+            {[
+              { label: 'Nama PT', value: submission.institution_name },
+              { label: 'Pengisi', value: submission.submitted_by },
+              { label: 'Jabatan', value: submission.position || '-' },
+              {
+                label: 'Tanggal',
+                value: submission.submission_date
                   ? new Date(submission.submission_date).toLocaleDateString('id-ID', {
                       day: 'numeric',
                       month: 'long',
                       year: 'numeric',
                     })
-                  : '-'}
-              </p>
-            </div>
-            <div>
-              <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">Status:</span>
-              <span
-                className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                  submission.status === 'submitted'
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-yellow-100 text-yellow-800'
-                }`}
-              >
-                {submission.status === 'submitted' ? 'Terkirim' : 'Draft'}
-              </span>
-            </div>
-            <div>
-              <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">Dibuat:</span>
-              <p className="text-sm sm:text-base text-gray-900">
-                {new Date(submission.created_at).toLocaleDateString('id-ID', {
+                  : '-',
+              },
+              {
+                label: 'Status',
+                value: (
+                  <span
+                    className={`px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      submission.status === 'submitted'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-yellow-100 text-yellow-800'
+                    }`}
+                  >
+                    {submission.status === 'submitted' ? 'Terkirim' : 'Draft'}
+                  </span>
+                ),
+              },
+              {
+                label: 'Dibuat',
+                value: new Date(submission.created_at).toLocaleDateString('id-ID', {
                   day: 'numeric',
                   month: 'long',
                   year: 'numeric',
                   hour: '2-digit',
                   minute: '2-digit',
-                })}
-              </p>
-            </div>
+                }),
+              },
+            ].map((item) => (
+              <div key={item.label} className="rounded-xl bg-gray-50 p-3 sm:p-4">
+                <span className="text-xs sm:text-sm font-medium text-gray-500 block mb-1">
+                  {item.label}:
+                </span>
+                <div className="text-sm sm:text-base text-gray-900 break-words">{item.value}</div>
+              </div>
+            ))}
           </div>
         </div>
 
         {Object.entries(formSchema).map(([sectionKey, section]) => (
-          <div key={sectionKey} className="bg-white rounded-lg shadow-md mb-3 sm:mb-4 overflow-hidden">
-            <div className="px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-blue-50 to-white">
+          <div key={sectionKey} className="bg-white rounded-2xl border border-gray-200 shadow-sm mb-3 sm:mb-4 overflow-hidden">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-indigo-600">
               <div className="flex items-center gap-2 sm:gap-3">
-                <span className="bg-blue-600 text-white font-bold rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs sm:text-sm">
+                <span className="bg-white/20 text-white font-bold rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs sm:text-sm border border-white/30">
                   {sectionKey}
                 </span>
-                <h2 className="text-base sm:text-lg font-semibold text-gray-800">{section.title}</h2>
+                <h2 className="text-base sm:text-lg font-semibold text-white">{section.title}</h2>
               </div>
             </div>
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               {section.items.map((item) => (
-                <div key={item.id} className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                <div key={item.id} className="rounded-xl border border-gray-200 bg-slate-50 p-3 sm:p-4">
                   <h3 className="font-semibold text-gray-800 mb-1 text-sm sm:text-base">{item.title}</h3>
                   <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">{item.description}</p>
                   {renderItemContent(item, submission.form_data, getFileUrl, attachmentMap)}

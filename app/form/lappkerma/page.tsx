@@ -160,7 +160,7 @@ export default function LappkermaForm() {
 
       localStorage.removeItem('lappkermaFormDraft');
       setHeaderData({
-        institution_name: '',
+        institution_name: '', 
         submitted_by: '',
         position: '',
         submission_date: new Date().toISOString().split('T')[0],
@@ -168,7 +168,7 @@ export default function LappkermaForm() {
       setFormData({});
       setSubmissionId(null);
       toast.success('Form berhasil dikirim');
-      router.push('/riwayat');
+      // router.push('/riwayat');
     } catch (error) {
       console.error('Submit error:', error);
       toast.error('Gagal mengirim form');
